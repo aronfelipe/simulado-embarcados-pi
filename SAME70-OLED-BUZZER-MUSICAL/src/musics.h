@@ -1,7 +1,7 @@
 #include "notes.h"
 
 //Mario main theme melody
-int melody[] = {
+int mario_melody[] = {
 	NOTE_E7, NOTE_E7, 0, NOTE_E7,
 	0, NOTE_C7, NOTE_E7, 0,
 	NOTE_G7, 0, 0,  0,
@@ -28,7 +28,7 @@ int melody[] = {
 	NOTE_D7, NOTE_B6, 0, 0
 };
 //Mario main them tempo
-int tempo[] = {
+int mario_temp[] = {
 	12, 12, 12, 12,
 	12, 12, 12, 12,
 	12, 12, 12, 12,
@@ -97,114 +97,4 @@ int underworld_tempo[] = {
 	10, 10, 10,
 	10, 10, 10,
 	3, 3, 3
-};
-
-// Pirates melody
-int pirates_melody[] = {       //Note of the song, 0 is a rest/pulse
-   NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0, 
-   NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, 0, 
-   NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, 0,
-   NOTE_A4, NOTE_G4, NOTE_A4, 0,
-   
-   NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0, 
-   NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, 0, 
-   NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, 0,
-   NOTE_A4, NOTE_G4, NOTE_A4, 0,
-   
-   NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0, 
-   NOTE_A4, NOTE_C5, NOTE_D5, NOTE_D5, 0, 
-   NOTE_D5, NOTE_E5, NOTE_F5, NOTE_F5, 0,
-   NOTE_E5, NOTE_D5, NOTE_E5, NOTE_A4, 0,
-   
-   NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, 0, 
-   NOTE_D5, NOTE_E5, NOTE_A4, 0, 
-   NOTE_A4, NOTE_C5, NOTE_B4, NOTE_B4, 0,
-   NOTE_C5, NOTE_A4, NOTE_B4, 0,
-
-   NOTE_A4, NOTE_A4, 
-   //Repeat of first part
-   NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, 0, 
-   NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, 0,
-   NOTE_A4, NOTE_G4, NOTE_A4, 0,
-
-   NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0, 
-   NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, 0, 
-   NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, 0,
-   NOTE_A4, NOTE_G4, NOTE_A4, 0,
-   
-   NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, 0, 
-   NOTE_A4, NOTE_C5, NOTE_D5, NOTE_D5, 0, 
-   NOTE_D5, NOTE_E5, NOTE_F5, NOTE_F5, 0,
-   NOTE_E5, NOTE_D5, NOTE_E5, NOTE_A4, 0,
-   
-   NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, 0, 
-   NOTE_D5, NOTE_E5, NOTE_A4, 0, 
-   NOTE_A4, NOTE_C5, NOTE_B4, NOTE_B4, 0,
-   NOTE_C5, NOTE_A4, NOTE_B4, 0,
-   //End of Repeat
-
-   NOTE_E5, 0, 0, NOTE_F5, 0, 0,
-   NOTE_E5, NOTE_E5, 0, NOTE_G5, 0, NOTE_E5, NOTE_D5, 0, 0,
-   NOTE_D5, 0, 0, NOTE_C5, 0, 0,
-   NOTE_B4, NOTE_C5, 0, NOTE_B4, 0, NOTE_A4,
-
-   NOTE_E5, 0, 0, NOTE_F5, 0, 0,
-   NOTE_E5, NOTE_E5, 0, NOTE_G5, 0, NOTE_E5, NOTE_D5, 0, 0,
-   NOTE_D5, 0, 0, NOTE_C5, 0, 0,
-   NOTE_B4, NOTE_C5, 0, NOTE_B4, 0, NOTE_A4
-};
-
-// Pirates tempo
-int pirates_tempo[] = {
-  125, 125, 250, 125, 125, 
-  125, 125, 250, 125, 125,
-  125, 125, 250, 125, 125,
-  125, 125, 375, 125, 
-  
-  125, 125, 250, 125, 125, 
-  125, 125, 250, 125, 125,
-  125, 125, 250, 125, 125,
-  125, 125, 375, 125, 
-  
-  125, 125, 250, 125, 125, 
-  125, 125, 250, 125, 125,
-  125, 125, 250, 125, 125,
-  125, 125, 125, 250, 125,
-
-  125, 125, 250, 125, 125, 
-  250, 125, 250, 125, 
-  125, 125, 250, 125, 125,
-  125, 125, 375, 375,
-
-  250, 125,
-  //Rpeat of First Part
-  125, 125, 250, 125, 125,
-  125, 125, 250, 125, 125,
-  125, 125, 375, 125, 
-  
-  125, 125, 250, 125, 125, 
-  125, 125, 250, 125, 125,
-  125, 125, 250, 125, 125,
-  125, 125, 375, 125, 
-  
-  125, 125, 250, 125, 125, 
-  125, 125, 250, 125, 125,
-  125, 125, 250, 125, 125,
-  125, 125, 125, 250, 125,
-
-  125, 125, 250, 125, 125, 
-  250, 125, 250, 125, 
-  125, 125, 250, 125, 125,
-  125, 125, 375, 375,
-  //End of Repeat
-  
-  250, 125, 375, 250, 125, 375,
-  125, 125, 125, 125, 125, 125, 125, 125, 375,
-  250, 125, 375, 250, 125, 375,
-  125, 125, 125, 125, 125, 500,
-
-  250, 125, 375, 250, 125, 375,
-  125, 125, 125, 125, 125, 125, 125, 125, 375,
-  250, 125, 375, 250, 125, 375,
-  125, 125, 125, 125, 125, 500
 };

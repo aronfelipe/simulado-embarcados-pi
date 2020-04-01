@@ -203,9 +203,9 @@ src/ASF/sam/utils/cmsis/same70/source/templates/system_same70.d \
 src/ASF/sam/utils/syscalls/gcc/syscalls.d \
 src/main.d
 
-OUTPUT_FILE_PATH +=OLED1.elf
+OUTPUT_FILE_PATH +=SAME70-OLED-BUZZER-MUSICAL.elf
 
-OUTPUT_FILE_PATH_AS_ARGS +=OLED1.elf
+OUTPUT_FILE_PATH_AS_ARGS +=SAME70-OLED-BUZZER-MUSICAL.elf
 
 ADDITIONAL_DEPENDENCIES:=
 
@@ -384,14 +384,14 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER_SCRIPT_DEP)
 	@echo Building target: $@
 	@echo Invoking: ARM/GNU Linker : 6.3.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -mthumb -Wl,-Map="OLED1.map" -Wl,--start-group -larm_cortexM7lfsp_math_softfp -lm  -Wl,--end-group -L"../src/ASF/thirdparty/CMSIS/Lib/GCC"  -Wl,--gc-sections -mcpu=cortex-m7 -Wl,--entry=Reset_Handler -Wl,--cref -mthumb -T../src/ASF/sam/utils/linker_scripts/same70/same70q21/gcc/flash.ld  
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -mthumb -Wl,-Map="SAME70-OLED-BUZZER-MUSICAL.map" -Wl,--start-group -larm_cortexM7lfsp_math_softfp -lm  -Wl,--end-group -L"../src/ASF/thirdparty/CMSIS/Lib/GCC"  -Wl,--gc-sections -mcpu=cortex-m7 -Wl,--entry=Reset_Handler -Wl,--cref -mthumb -T../src/ASF/sam/utils/linker_scripts/same70/same70q21/gcc/flash.ld  
 	@echo Finished building target: $@
-	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O binary "OLED1.elf" "OLED1.bin"
-	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature  "OLED1.elf" "OLED1.hex"
-	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -j .eeprom --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0 --no-change-warnings -O binary "OLED1.elf" "OLED1.eep" || exit 0
-	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objdump.exe" -h -S "OLED1.elf" > "OLED1.lss"
-	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature  "OLED1.elf" "OLED1.srec"
-	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-size.exe" "OLED1.elf"
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O binary "SAME70-OLED-BUZZER-MUSICAL.elf" "SAME70-OLED-BUZZER-MUSICAL.bin"
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature  "SAME70-OLED-BUZZER-MUSICAL.elf" "SAME70-OLED-BUZZER-MUSICAL.hex"
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -j .eeprom --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0 --no-change-warnings -O binary "SAME70-OLED-BUZZER-MUSICAL.elf" "SAME70-OLED-BUZZER-MUSICAL.eep" || exit 0
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objdump.exe" -h -S "SAME70-OLED-BUZZER-MUSICAL.elf" > "SAME70-OLED-BUZZER-MUSICAL.lss"
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature  "SAME70-OLED-BUZZER-MUSICAL.elf" "SAME70-OLED-BUZZER-MUSICAL.srec"
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-size.exe" "SAME70-OLED-BUZZER-MUSICAL.elf"
 	
 	
 
@@ -403,5 +403,5 @@ $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER
 clean:
 	-$(RM) $(OBJS_AS_ARGS) $(EXECUTABLES)  
 	-$(RM) $(C_DEPS_AS_ARGS)   
-	rm -rf "OLED1.elf" "OLED1.a" "OLED1.hex" "OLED1.bin" "OLED1.lss" "OLED1.eep" "OLED1.map" "OLED1.srec"
+	rm -rf "SAME70-OLED-BUZZER-MUSICAL.elf" "SAME70-OLED-BUZZER-MUSICAL.a" "SAME70-OLED-BUZZER-MUSICAL.hex" "SAME70-OLED-BUZZER-MUSICAL.bin" "SAME70-OLED-BUZZER-MUSICAL.lss" "SAME70-OLED-BUZZER-MUSICAL.eep" "SAME70-OLED-BUZZER-MUSICAL.map" "SAME70-OLED-BUZZER-MUSICAL.srec"
 	

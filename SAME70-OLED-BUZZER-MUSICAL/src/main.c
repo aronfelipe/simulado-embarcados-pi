@@ -58,13 +58,6 @@ volatile int size;
 int currentNote = 0;
 int currentSong = 0;
 
-typedef struct {
-	int size;
-	int melody[];
-	int temp[];
-	char name;
-} song;
-
 /************************************************************************/
 /* Prototypes                                                           */
 /************************************************************************/
@@ -179,21 +172,6 @@ void playNote(long frequency, int length){
 	}
 }
 
-void createSong(int size, int[] melody, int[] temp, char name) {
-	song _song;
-	_song.size = size;
-	_song.melody = melody;
-	_song.temp = temp;
-	_song.name;
-	return _song
-}
-
-void createSongs() {
-	
-}
-
-
-
 int main (void)
 {
 	board_init();
@@ -204,9 +182,6 @@ int main (void)
   // Init OLED
 	gfx_mono_ssd1306_init();
   
-  // Escreve na tela um circulo e um texto
-  // gfx_mono_draw_filled_circle(20, 16, 16, GFX_PIXEL_SET, GFX_WHOLE);
-
   /* Insert application code here, after the board has been initialized. */
 	while(1) {
 		if (but_flag == 2) {
@@ -229,43 +204,23 @@ int main (void)
 		}
 		
 		if (but_flag == 3) {
-			int size = sizeof(melody)/sizeof(int);
+			int size = sizeof(mario_melody)/sizeof(int);
 			for (int currentNote = 0; currentNote < size; currentNote++){
 				gfx_mono_draw_string("            ", 10,16, &sysfont);
 				gfx_mono_draw_string("Mario", 10,16, &sysfont);
-				int noteDuration = 1000 / tempo[currentNote];
-				playNote(melody[currentNote], noteDuration);
+				int noteDuration = 1000 / mario_temp[currentNote];
+				playNote(mario_melody[currentNote], noteDuration);
 				if (but_flag == 10){
 					currentSong = 3;
 					while (but_flag == 10) {
 						delay_ms(1);
 					}
 					if (but_flag == 9){
-						but_flag = currentSong + 1;
+						but_flag = currentSong - 1;
 						break;
 					}
 				}
 			}
 		}
-
-		if (but_flag == 4) {
-			int size = sizeof(pirates_melody)/sizeof(int);
-			for (int currentNote = 0; currentNote < size; currentNote++){
-				gfx_mono_draw_string("            ", 10,16, &sysfont);
-				gfx_mono_draw_string("Pirates", 10,16, &sysfont);
-				int noteDuration = (1000 / pirates_tempo[currentNote]) + 10;
-				playNote(melody[currentNote], noteDuration);
-				if (but_flag == 10){
-					currentSong = 4;
-					while (but_flag == 10) {
-						delay_ms(1);
-					}
-				if (but_flag == 9){
-					but_flag = currentSong - 2;
-					break;
-				}
-			}
-		}
-	}
 	}
 }
