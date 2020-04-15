@@ -1,5 +1,3 @@
-
-
 /************************************************************************/
 /* includes                                                             */
 /************************************************************************/
@@ -8,7 +6,6 @@
 #include "oled/gfx_mono_text.h"
 #include "sysfont.h"
 #include "asf.h"
-#include "musics.h"
 
 /************************************************************************/
 /* Defines                                                              */
@@ -25,6 +22,7 @@ typedef struct  {
 	uint32_t seccond;
 } calendar;
 
+// vTaskDelay()
 
 // Buzzer
 #define BUZZ_PIO PIOC
@@ -341,30 +339,39 @@ void init(void){
 /*
  * @Brief Pisca LED placa
  */
-void pisca_TC_1(int n, int t){
-  for (int i=0;i<n;i++){
-    pio_clear(LED_PIO_1, LED_IDX_MASK_1);
-    delay_ms(t);
-    pio_set(LED_PIO_1, LED_IDX_MASK_1);
-    delay_ms(t);
-  }
-}
-
-void pisca_TC_2(int n, int t){
-	for (int i=0;i<n;i++){
-		pio_clear(LED_PIO_2, LED_IDX_MASK_2);
-		delay_ms(t);
-		pio_set(LED_PIO_2, LED_IDX_MASK_2);
-		delay_ms(t);
+void pisca_TC(int n, int t, int led){
+	if (led == 0) {
+		for (int i=0;i<n;i++){
+			pio_clear(LED_PIO_PLACA, LED_IDX_MASK_PLACA);
+			delay_ms(t);
+			pio_set(LED_PIO_PLACA, LED_IDX_MASK_PLACA);
+			delay_ms(t);
+		}
 	}
-}
-
-void pisca_TC_3(int n, int t){
-	for (int i=0;i<n;i++){
-		pio_clear(LED_PIO_3, LED_IDX_MASK_3);
-		delay_ms(t);
-		pio_set(LED_PIO_3, LED_IDX_MASK_3);
-		delay_ms(t);
+	else if (led == 1) {
+	  for (int i=0;i<n;i++){
+		  pio_clear(LED_PIO_1, LED_IDX_MASK_1);
+		  delay_ms(t);
+		  pio_set(LED_PIO_1, LED_IDX_MASK_1);
+		  delay_ms(t);
+		}
+	}
+	
+	else if (led == 2) {
+		for (int i=0;i<n;i++){
+			pio_clear(LED_PIO_2, LED_IDX_MASK_2);
+			delay_ms(t);
+			pio_set(LED_PIO_2, LED_IDX_MASK_2);
+			delay_ms(t);
+		}
+	}
+	else if (led == 3) {
+		for (int i=0;i<n;i++){
+			pio_clear(LED_PIO_3, LED_IDX_MASK_3);
+			delay_ms(t);
+			pio_set(LED_PIO_3, LED_IDX_MASK_3);
+			delay_ms(t);
+		}
 	}
 }
 
@@ -478,92 +485,102 @@ int main (void)
 	
 	f_rtt_alarme = true;
 
-	calendar rtc_initial = {2018, 3, 19, 12, 15, 45 ,1};
+	calendar rtc_initial = {2020, 4, 14, 12, 17, 51, 55};
 	RTC_init(RTC, ID_RTC, rtc_initial, RTC_IER_ALREN);
 	
 	int hour;
 	int minute;
-	int second = 1;
+	int second;
 	
   /* Insert application code here, after the board has been initialized. */
 	while(1) {
-// 		rtc_get_time(RTC, hour, minute, second);
-// 		second = 1;
-// 		char result[50];
-// 		sprintf(result, "%f", second);
-// 
-//  	gfx_mono_draw_string(result, 10, 0, &sysfont);
+		rtc_get_time(RTC, &hour, &minute, &second);
+		char second_[50];
+		char minute_[50];
+		char hour_[50];
+
+		sprintf(second_, "%d", second);
+		sprintf(minute_, "%d", minute);
+		sprintf(hour_, "%d", hour);
+	
+ 		gfx_mono_draw_string("                   ", 10, 0, &sysfont);
+
+ 		gfx_mono_draw_string(second_, 90, 0, &sysfont);
+//  		gfx_mono_draw_string(":", 70, 0, &sysfont);
+		gfx_mono_draw_string(minute_, 50, 0, &sysfont);
+//  		gfx_mono_draw_string(":", 30, 0, &sysfont);
+ 		gfx_mono_draw_string(hour_, 10, 0, &sysfont);
+
 
 // 		pmc_sleep(SAM_PM_SMODE_SLEEP_WFI);
 
 // 		gfx_mono_draw_char(get_time_rtt(), 10, 0, &sysfont);
 
-		gfx_mono_draw_string("5   10   1", 10, 0, &sysfont);
+// 		gfx_mono_draw_string("5   10   1", 10, 0, &sysfont);
 
 		if (get_time_rtt() == 1) {
-			gfx_mono_draw_filled_circle(5, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(15, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(25, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(5, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(15, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(25, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
 		}
 		
 		if (get_time_rtt() == 9) {
-			gfx_mono_draw_filled_circle(5, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(15, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(25, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(35, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(45, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(55, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(5, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(15, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(25, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(35, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(45, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(55, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
 
 		}
 		
 		if (get_time_rtt() == 17) {
-			gfx_mono_draw_filled_circle(5, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(15, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(25, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(35, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(45, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(55, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(65, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(75, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(85, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(95, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(105, 23, 2, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(5, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(15, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(25, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(35, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(45, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(55, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(65, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(75, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(85, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(95, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(105, 23, 1.8, GFX_PIXEL_SET, GFX_WHOLE);
 		}
 		
 		if (get_time_rtt() == 18) {
-			gfx_mono_draw_filled_circle(5, 23, 2, GFX_PIXEL_CLR, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(15, 23, 2, GFX_PIXEL_CLR, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(25, 23, 2, GFX_PIXEL_CLR, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(35, 23, 2, GFX_PIXEL_CLR, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(45, 23, 2, GFX_PIXEL_CLR, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(55, 23, 2, GFX_PIXEL_CLR, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(65, 23, 2, GFX_PIXEL_CLR, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(75, 23, 2, GFX_PIXEL_CLR, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(85, 23, 2, GFX_PIXEL_CLR, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(95, 23, 2, GFX_PIXEL_CLR, GFX_WHOLE);
-			gfx_mono_draw_filled_circle(105, 23, 2, GFX_PIXEL_CLR, GFX_WHOLE);
-
+			gfx_mono_draw_filled_circle(5, 23, 1.8, GFX_PIXEL_CLR, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(15, 23, 1.8, GFX_PIXEL_CLR, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(25, 23, 1.8, GFX_PIXEL_CLR, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(35, 23, 1.8, GFX_PIXEL_CLR, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(45, 23, 1.8, GFX_PIXEL_CLR, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(55, 23, 1.8, GFX_PIXEL_CLR, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(65, 23, 1.8, GFX_PIXEL_CLR, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(75, 23, 1.8, GFX_PIXEL_CLR, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(85, 23, 1.8, GFX_PIXEL_CLR, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(95, 23, 1.8, GFX_PIXEL_CLR, GFX_WHOLE);
+			gfx_mono_draw_filled_circle(105, 23, 1.8, GFX_PIXEL_CLR, GFX_WHOLE);
 		}
 				
 		if (led_status) {
 			
 			if(flag_tc_led1){
 				if (but_flag_1 == 1) {
-					pisca_TC_1(1,5);
+					pisca_TC(1,5,1);
 					flag_tc_led1 = 0;
 				}
 			}
 			
 			if(flag_tc_led2){
 				if (but_flag_2 == 1) {
-					pisca_TC_2(1,10);
+					pisca_TC(1,10,2);
 					flag_tc_led2 = 0;
 				}
 			}
 			
 			if(flag_tc_led3){
 				if (but_flag_3 == 1) {
-					pisca_TC_3(1,1);
+					pisca_TC(1,1,3);
 					flag_tc_led3 = 0;
 				}
 			}
